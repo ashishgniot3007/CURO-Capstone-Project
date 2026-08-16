@@ -20,9 +20,7 @@ function Home() {
                     <a href="#contact">Contact</a>
                 </nav>
 
-                <button className="cta-btn-nav" onClick={() => window.location.href = "/appointment"}>
-                    Book Appointment
-                </button>
+                
 
             </header>
 
