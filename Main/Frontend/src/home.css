@@ -1,0 +1,254 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f7f9fc;
+    color: #333;
+}
+
+.curo-app {
+    width: 100%;
+}
+
+/* Navigation Bar */
+
+.navbar {
+    height: 90px;
+    background: white;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 45px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.logo {
+    font-size: 32px;
+    font-weight: bold;
+    color: #2f628d;
+}
+
+.logo span {
+    color: #ff6b6b;
+}
+
+.navbar nav {
+    display: flex;
+    gap: 40px;
+}
+
+.navbar nav a {
+    text-decoration: none;
+    color: #333;
+    font-size: 18px;
+    font-weight: 500;
+}
+
+.navbar nav a:hover {
+    color: #2f628d;
+}
+
+.cta-btn-nav {
+    background: #2f628d;
+    color: white;
+    border: none;
+    padding: 15px 25px;
+    border-radius: 6px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+/* Hero Section */
+
+.hero {
+    min-height: 625px;
+    background: linear-gradient(135deg, #376f9e, #4b96c5);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 70px 45px;
+    color: white;
+}
+
+.hero-content {
+    width: 52%;
+}
+
+.hero-content h1 {
+    font-size: 52px;
+    line-height: 1.5;
+    margin-bottom: 25px;
+}
+
+.hero-content p {
+    font-size: 20px;
+    line-height: 1.7;
+    margin-bottom: 35px;
+}
+
+.hero-buttons {
+    display: flex;
+    gap: 20px;
+}
+
+.primary-btn {
+    background: #ff6b6b;
+    color: white;
+    border: none;
+    padding: 18px 40px;
+    border-radius: 6px;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.secondary-btn {
+    background: transparent;
+    color: white;
+    border: 2px solid white;
+    padding: 16px 40px;
+    border-radius: 6px;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.hero-image {
+    width: 38%;
+    display: flex;
+    justify-content: center;
+}
+
+.placeholder-card {
+    width: 440px;
+    height: 215px;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    border-radius: 12px;
+    background: rgba(255, 255, 255, 0.12);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.placeholder-card h3 {
+    font-size: 28px;
+    margin-bottom: 10px;
+}
+
+.placeholder-card p {
+    font-size: 18px;
+}
+
+/* Services */
+
+.services {
+    padding: 70px 40px;
+    background: #f7f9fc;
+}
+
+.services h2 {
+    text-align: center;
+    color: #2f628d;
+    font-size: 38px;
+    margin-bottom: 50px;
+}
+
+.service-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 35px;
+    max-width: 1400px;
+    margin: auto;
+}
+
+.service-card {
+    background: white;
+    min-height: 205px;
+    padding: 45px 30px;
+    border-radius: 12px;
+    text-align: center;
+    box-shadow: 0 5px 18px rgba(0, 0, 0, 0.08);
+}
+
+.service-card h3 {
+    color: #2f628d;
+    font-size: 26px;
+    margin-bottom: 25px;
+}
+
+.service-card p {
+    color: #666;
+    font-size: 19px;
+    line-height: 1.6;
+}
+
+/* Footer */
+
+.footer {
+    background: #102d42;
+    color: white;
+    text-align: center;
+    padding: 45px 20px;
+}
+
+.footer h3 {
+    font-size: 28px;
+    margin-bottom: 20px;
+}
+
+.footer p {
+    font-size: 17px;
+    margin: 10px 0;
+}
+
+/* Mobile */
+
+@media (max-width: 800px) {
+
+    .navbar {
+        height: auto;
+        padding: 20px;
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .navbar nav {
+        gap: 20px;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .hero {
+        flex-direction: column;
+        text-align: center;
+        gap: 50px;
+    }
+
+    .hero-content {
+        width: 100%;
+    }
+
+    .hero-content h1 {
+        font-size: 40px;
+    }
+
+    .hero-image {
+        width: 100%;
+    }
+
+    .hero-buttons {
+        justify-content: center;
+    }
+
+    .service-grid {
+        grid-template-columns: 1fr;
+    }
+}
