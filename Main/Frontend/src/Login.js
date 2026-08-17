@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import "./login.css";
 
 function Login() {
 
@@ -36,9 +37,9 @@ function Login() {
                 data
             );
 
-            console.log("this is the response " + response.data);
+            console.log("this is the response ", response.data);
 
-            if (!response.data) {
+            if (!response.data.success) {
 
                 alert("Invalid User Id or Password");
 
@@ -46,8 +47,27 @@ function Login() {
 
                 alert("Login Successful");
 
-                // Go to Home page after successful login
-                window.location.href = "/home";
+                // Save login information
+                localStorage.setItem("isLoggedIn", "true");
+                localStorage.setItem("role", response.data.role);
+
+                // Redirect according to role
+                if (response.data.role === "Patient") {
+
+                    window.location.href = "/home";
+
+                } else if (response.data.role === "Doctor") {
+
+                    window.location.href = "/doctor-dashboard";
+
+                } else if (response.data.role === "Hospital") {
+
+                    window.location.href = "/hospital-dashboard";
+
+                } else if (response.data.role === "Admin") {
+
+                    window.location.href = "/home";
+                }
             }
 
         } catch (error) {
@@ -62,49 +82,107 @@ function Login() {
     };
 
     return (
-        <>
-            <h1>this is login page</h1>
+        <div className="login-page">
 
-            <div className="container">
+            {/* Navbar */}
 
-                <form onSubmit={handleSubmit}>
+            <nav className="login-navbar">
 
-                    <label>User ID:</label>
+                <div className="login-logo">
+                    CURO.
+                </div>
 
-                    <input
-                        type="email"
-                        placeholder="Enter your user id"
-                        value={userId}
-                        onChange={setUserId}
-                    />
+                <div className="login-nav-links">
 
-                    <br />
-                    <br />
+                    <a href="/home">Home</a>
+                    <a href="/home">Services</a>
+                    <a href="/home">About Us</a>
+                    <a href="/home">Contact</a>
 
-                    <label>Password:</label>
+                </div>
 
-                    <input
-                        type="password"
-                        placeholder="Enter your password"
-                        value={password}
-                        onChange={setPassword}
-                    />
+                <div className="login-nav-buttons">
 
-                    <br />
-                    <br />
-
-                    <a onClick={redirectToRegister}>
-                        don't have an account
-                    </a>
-
-                    <button type="submit">
-                        Login
+                    <button
+                        className="login-register-btn"
+                        onClick={redirectToRegister}
+                    >
+                        Register
                     </button>
 
-                </form>
+                </div>
+
+            </nav>
+
+
+            {/* Login Section */}
+
+            <div className="login-content">
+
+                <div className="login-card">
+
+                    <h1>Welcome Back</h1>
+
+                    <p className="login-subtitle">
+                        Sign in to your CURO account
+                    </p>
+
+                    <form
+                        className="login-form"
+                        onSubmit={handleSubmit}
+                    >
+
+                        <label>
+                            Email
+                        </label>
+
+                        <input
+                            type="email"
+                            placeholder="Enter your email"
+                            value={userId}
+                            onChange={setUserId}
+                            required
+                        />
+
+
+                        <label>
+                            Password
+                        </label>
+
+                        <input
+                            type="password"
+                            placeholder="Enter your password"
+                            value={password}
+                            onChange={setPassword}
+                            required
+                        />
+
+
+                        <button
+                            type="submit"
+                            className="login-button"
+                        >
+                            Login
+                        </button>
+
+                    </form>
+
+
+                    <p className="login-register-text">
+
+                        Don't have an account?{" "}
+
+                        <a onClick={redirectToRegister}>
+                            Register
+                        </a>
+
+                    </p>
+
+                </div>
 
             </div>
-        </>
+
+        </div>
     );
 }
 

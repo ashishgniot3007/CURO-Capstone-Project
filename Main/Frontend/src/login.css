@@ -1,16 +1,12 @@
-* {
-    box-sizing: border-box;
-}
-
-.register-page {
+.login-page {
     min-height: 100vh;
-    background: #f5f7fa;
+    background-color: #f5f7fa;
     font-family: Arial, sans-serif;
 }
 
 /* Navbar */
 
-.register-navbar {
+.login-navbar {
     height: 80px;
     background-color: white;
     display: flex;
@@ -19,172 +15,145 @@
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
 }
 
-.register-logo {
+.login-logo {
     font-size: 30px;
     font-weight: 700;
     color: #2f6690;
 }
 
-.register-nav-links {
+.login-nav-links {
     display: flex;
     gap: 45px;
     margin-left: 180px;
 }
 
-.register-nav-links a {
+.login-nav-links a {
     text-decoration: none;
     color: #333;
     font-size: 18px;
     font-weight: 500;
 }
 
-.register-nav-links a:hover {
+.login-nav-links a:hover {
     color: #2f6690;
 }
 
-.register-nav-button {
+.login-nav-buttons {
     margin-left: auto;
+    display: flex;
+    gap: 15px;
 }
 
-.register-login-btn {
-    padding: 11px 25px;
-    border: 2px solid #2f6690;
+.login-register-btn {
+    padding: 13px 28px;
     border-radius: 6px;
-    background: white;
-    color: #2f6690;
-    font-size: 15px;
+    border: none;
+    background-color: #2f6690;
+    color: white;
+    font-size: 16px;
     font-weight: 600;
     cursor: pointer;
 }
 
-.register-login-btn:hover {
-    background: #2f6690;
-    color: white;
+.login-register-btn:hover {
+    background-color: #285a7d;
 }
 
+/* Login section */
 
-/* Register section */
-
-.register-content {
+.login-content {
     min-height: calc(100vh - 80px);
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 45px 20px;
+    padding: 50px 20px;
 }
 
-.register-card {
-    width: 100%;
-    max-width: 520px;
-    background: white;
-    padding: 40px 45px;
+.login-card {
+    width: 420px;
+    background-color: white;
+    padding: 45px;
     border-radius: 12px;
     box-shadow: 0 4px 18px rgba(0, 0, 0, 0.10);
 }
 
-.register-card h1 {
+.login-card h1 {
     text-align: center;
     color: #2f6690;
-    font-size: 30px;
-    margin: 0 0 8px;
+    font-size: 32px;
+    margin-bottom: 10px;
 }
 
-.register-subtitle {
+.login-subtitle {
     text-align: center;
     color: #666;
-    font-size: 15px;
-    margin-bottom: 30px;
+    font-size: 16px;
+    margin-bottom: 35px;
 }
-
 
 /* Form */
 
-.register-form {
+.login-form {
     display: flex;
     flex-direction: column;
 }
 
-.register-form label {
-    color: #333;
+.login-form label {
     font-size: 15px;
     font-weight: 600;
-    margin-bottom: 7px;
-    margin-top: 14px;
+    color: #333;
+    margin-bottom: 8px;
 }
 
-.register-form input,
-.register-form select {
+.login-form input {
     width: 100%;
-    padding: 13px;
+    box-sizing: border-box;
+    padding: 14px;
     border: 1px solid #d5dbe0;
     border-radius: 6px;
     font-size: 15px;
+    margin-bottom: 22px;
     outline: none;
-    background: white;
 }
 
-.register-form input:focus,
-.register-form select:focus {
+.login-form input:focus {
     border-color: #2f6690;
     box-shadow: 0 0 0 2px rgba(47, 102, 144, 0.12);
 }
 
-
-/* Create account button */
-
-.register-submit-btn {
+.login-button {
     width: 100%;
     padding: 14px;
-    margin-top: 25px;
     border: none;
     border-radius: 6px;
-    background: #2f6690;
+    background-color: #2f6690;
     color: white;
     font-size: 17px;
     font-weight: 600;
     cursor: pointer;
+    margin-top: 5px;
 }
 
-.register-submit-btn:hover {
-    background: #285a7d;
+.login-button:hover {
+    background-color: #285a7d;
 }
 
+/* Register link */
 
-/* Sign in link */
-
-.register-signin-text {
+.login-register-text {
     text-align: center;
+    margin-top: 25px;
     color: #666;
     font-size: 15px;
-    margin-top: 22px;
 }
 
-.register-signin-text a {
+.login-register-text a {
     color: #2f6690;
     font-weight: 600;
     text-decoration: none;
     cursor: pointer;
 }
 
-.register-signin-text a:hover {
+.login-register-text a:hover {
     text-decoration: underline;
-}
-
-
-/* Mobile */
-
-@media (max-width: 700px) {
-
-    .register-nav-links {
-        display: none;
-    }
-
-    .register-navbar {
-        padding: 0 20px;
-    }
-
-    .register-card {
-        padding: 30px 25px;
-    }
-
 }

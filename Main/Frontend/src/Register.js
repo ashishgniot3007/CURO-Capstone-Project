@@ -8,6 +8,7 @@ function Register() {
         name: "",
         email: "",
         password: "",
+        role: "Patient",
     });
 
     const [confirmPassword, setConfirmPassword] = useState("");
@@ -37,7 +38,19 @@ function Register() {
 
             console.log(response.data);
             alert("User added successfully");
-            window.location.href = "/home";
+
+            if (register.role === "Patient") {
+                window.location.href = "/home";
+
+            }else if (register.role === "Doctor") {
+                window.location.href = "/doctor-dashboard";
+
+            } else if (register.role === "Hospital") {
+                window.location.href = "/hospital-dashboard";
+
+            } else if (register.role === "Admin") {
+                window.location.href = "/home";
+            }
 
         } catch (error) {
             console.log(error);
@@ -46,25 +59,56 @@ function Register() {
     };
 
     return (
-        <div className="register-page">
+    <div className="register-page">
 
-            <div className="curo-header">
-                <div className="curo-logo">Curo</div>
-                <div className="curo-tagline">
-                    Healthcare at your fingertips
-                </div>
+        {/* Navbar */}
+
+        <nav className="register-navbar">
+
+            <div className="register-logo">
+                CURO.
             </div>
+
+            <div className="register-nav-links">
+                <a href="/home">Home</a>
+                <a href="/home">Services</a>
+                <a href="/home">About Us</a>
+                <a href="/home">Contact</a>
+            </div>
+
+            <div className="register-nav-button">
+
+                <button
+                    className="register-login-btn"
+                    onClick={() => {
+                        window.location.href = "/login";
+                    }}
+                >
+                    Login
+                </button>
+
+            </div>
+
+        </nav>
+
+
+        {/* Register section */}
+
+        <div className="register-content">
 
             <div className="register-card">
 
                 <h1>Create your account</h1>
 
-                <p className="signin-text">
-                    Already have an account?{" "}
-                    <a href="/login">Sign in</a>
+                <p className="register-subtitle">
+                    Join CURO and access healthcare at your fingertips
                 </p>
 
-                <form onSubmit={handleSubmit}>
+
+                <form
+                    className="register-form"
+                    onSubmit={handleSubmit}
+                >
 
                     <label>Full Name</label>
 
@@ -77,6 +121,7 @@ function Register() {
                         required
                     />
 
+
                     <label>Email</label>
 
                     <input
@@ -88,14 +133,20 @@ function Register() {
                         required
                     />
 
+
                     <label>Role</label>
 
-                    <select defaultValue="Patient">
+                    <select
+                        name="role"
+                        value={register.role}
+                        onChange={handleChange}
+                    >
                         <option value="Patient">Patient</option>
                         <option value="Doctor">Doctor</option>
                         <option value="Hospital">Hospital</option>
                         <option value="Admin">Admin</option>
                     </select>
+
 
                     <label>Password</label>
 
@@ -107,6 +158,7 @@ function Register() {
                         onChange={handleChange}
                         required
                     />
+
 
                     <label>Confirm Password</label>
 
@@ -120,15 +172,34 @@ function Register() {
                         required
                     />
 
-                    <button type="submit">
+
+                    <button
+                        type="submit"
+                        className="register-submit-btn"
+                    >
                         Create Account
                     </button>
 
                 </form>
 
+
+                <p className="register-signin-text">
+                    Already have an account?{" "}
+                    <a
+                        onClick={() => {
+                            window.location.href = "/login";
+                        }}
+                    >
+                        Sign in
+                    </a>
+                </p>
+
             </div>
+
         </div>
-    );
+
+    </div>
+);
 }
 
 export default Register;

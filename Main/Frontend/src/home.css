@@ -54,6 +54,31 @@ body {
     color: #2f628d;
 }
 
+/* Login / Register / Logout buttons */
+
+.nav-buttons {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.login-nav-btn {
+    padding: 11px 25px;
+    border: 2px solid #2f628d;
+    border-radius: 6px;
+    background: white;
+    color: #2f628d;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.login-nav-btn:hover {
+    background: #2f628d;
+    color: white;
+}
+
 .cta-btn-nav {
     background: #2f628d;
     color: white;
@@ -63,6 +88,10 @@ body {
     font-size: 16px;
     font-weight: bold;
     cursor: pointer;
+}
+
+.cta-btn-nav:hover {
+    background: #285a7d;
 }
 
 /* Hero Section */
@@ -119,6 +148,8 @@ body {
     font-weight: bold;
     cursor: pointer;
 }
+
+/* Hero Image */
 
 .hero-image {
     width: 38%;
@@ -224,6 +255,10 @@ body {
         gap: 20px;
         flex-wrap: wrap;
         justify-content: center;
+    }
+
+    .nav-buttons {
+        margin-left: 0;
     }
 
     .hero {

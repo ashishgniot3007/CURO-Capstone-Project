@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.LoginRegister.example.entity.Users;
 import com.LoginRegister.example.repository.UsersRepo;
 import com.LoginRegister.example.requests.LoginRequest;
+import com.LoginRegister.example.requests.LoginResponse;
 
 @Service
 public class UserService {
@@ -20,22 +21,21 @@ public class UserService {
 		return usersRepo.save(user);
 		
 	}
-	public Boolean loginUser(LoginRequest loginRequest) {
+	public LoginResponse loginUser(LoginRequest loginRequest) {
 
     Optional<Users> user = usersRepo.findById(loginRequest.getUserId());
 
-    if(user.isEmpty()) {
-        return false;
+    if (user.isEmpty()) {
+        return new LoginResponse(false, null);
     }
 
     Users user1 = user.get();
 
-    if(!user1.getPassword().equals(loginRequest.getPassword())) {
-        return false;
+    if (!user1.getPassword().equals(loginRequest.getPassword())) {
+        return new LoginResponse(false, null);
     }
 
-    return true;
+    return new LoginResponse(true, user1.getRole());
 }
-	
 
 }

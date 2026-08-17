@@ -1,0 +1,147 @@
+.hospital-dashboard {
+    min-height: 100vh;
+    background: #f5f7fa;
+    color: #333;
+}
+
+/* Header */
+
+.hospital-header {
+    background: white;
+    padding: 18px 45px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #e5e5e5;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.hospital-header h1 {
+    margin: 0;
+    color: #2f628c;
+    font-size: 30px;
+    font-weight: 700;
+}
+
+.hospital-header p {
+    margin: 4px 0 0;
+    color: #666;
+    font-size: 16px;
+}
+
+.hospital-header button {
+    background: #2f628c;
+    color: white;
+    border: none;
+    padding: 11px 25px;
+    border-radius: 6px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+.hospital-header button:hover {
+    background: #245270;
+}
+
+
+/* Main */
+
+.hospital-content {
+    padding: 45px;
+}
+
+
+/* Welcome */
+
+.welcome-section {
+    text-align: center;
+    margin-bottom: 35px;
+}
+
+.welcome-section h2 {
+    margin: 0 0 10px;
+    color: #2f628c;
+    font-size: 32px;
+}
+
+.welcome-section p {
+    margin: 0;
+    color: #666;
+    font-size: 17px;
+}
+
+
+/* Statistics */
+
+.hospital-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+    margin-bottom: 40px;
+}
+
+.hospital-stat-card {
+    background: white;
+    padding: 28px;
+    border-radius: 12px;
+    text-align: center;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+    border: 1px solid #eeeeee;
+}
+
+.hospital-stat-card h3 {
+    margin: 0;
+    color: #2f628c;
+    font-size: 18px;
+}
+
+.hospital-stat-card p {
+    margin: 15px 0 0;
+    color: #333;
+    font-size: 36px;
+    font-weight: 700;
+}
+
+
+/* Overview */
+
+.hospital-section {
+    background: white;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+}
+
+.hospital-section h2 {
+    margin: 0 0 25px;
+    color: #2f628c;
+    font-size: 25px;
+}
+
+
+/* Cards */
+
+.hospital-options {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+.hospital-option-card {
+    padding: 25px;
+    border: 1px solid #e2e2e2;
+    border-radius: 8px;
+    background: #fafafa;
+}
+
+.hospital-option-card h3 {
+    margin: 0 0 10px;
+    color: #2f628c;
+}
+
+.hospital-option-card p {
+    margin: 0;
+    color: #666;
+    line-height: 1.6;
+}

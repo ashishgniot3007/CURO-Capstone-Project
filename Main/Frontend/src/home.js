@@ -1,31 +1,94 @@
-import React from "react";
+import React, { useState } from "react";
 import "./home.css";
 
 function Home() {
+
+    const [isLoggedIn, setIsLoggedIn] = useState(
+        localStorage.getItem("isLoggedIn") === "true"
+    );
+
+
+    const handleLogout = () => {
+
+        localStorage.removeItem("isLoggedIn");
+        localStorage.removeItem("role");
+
+        setIsLoggedIn(false);
+    };
+
+
+    const goToLogin = () => {
+        window.location.href = "/login";
+    };
+
+
+    const goToRegister = () => {
+        window.location.href = "/register";
+    };
+
 
     return (
         <div className="curo-app">
 
             {/* Navigation Bar */}
+
             <header className="navbar">
 
                 <div className="logo">
                     CURO<span>.</span>
                 </div>
 
+
                 <nav>
+
                     <a href="#home">Home</a>
                     <a href="#services">Services</a>
                     <a href="#about">About Us</a>
                     <a href="#contact">Contact</a>
+
                 </nav>
 
-                
+
+                {/* Login / Register / Logout */}
+
+                <div className="nav-buttons">
+
+                    {isLoggedIn ? (
+
+                        <button
+                            className="primary-btn"
+                            onClick={handleLogout}
+                        >
+                            Logout
+                        </button>
+
+                    ) : (
+
+                        <>
+                            <button
+                                className="login-nav-btn"
+                                onClick={goToLogin}
+                            >
+                                Login
+                            </button>
+
+                            <button
+                                className="primary-btn"
+                                onClick={goToRegister}
+                            >
+                                Register
+                            </button>
+                        </>
+
+                    )}
+
+                </div>
 
             </header>
 
 
             {/* Hero Section */}
+
             <section id="home" className="hero">
 
                 <div className="hero-content">
@@ -73,6 +136,7 @@ function Home() {
 
 
             {/* Services */}
+
             <section id="services" className="services">
 
                 <h2>Our Medical Services</h2>
@@ -80,51 +144,74 @@ function Home() {
                 <div className="service-grid">
 
                     <div className="service-card">
+
                         <h3>Cardiology</h3>
+
                         <p>
                             Expert heart care with advanced
                             diagnostic tools.
                         </p>
+
                     </div>
 
+
                     <div className="service-card">
+
                         <h3>Neurology</h3>
+
                         <p>
                             Comprehensive care for brain,
                             spine, and nerve conditions.
                         </p>
+
                     </div>
 
+
                     <div className="service-card">
+
                         <h3>Pediatrics</h3>
+
                         <p>
                             Gentle and friendly healthcare
                             for your children.
                         </p>
+
                     </div>
 
+
                     <div className="service-card">
+
                         <h3>Diagnostics</h3>
+
                         <p>
                             Fast and accurate lab tests
                             and imaging services.
                         </p>
+
                     </div>
 
+
                     <div className="service-card">
+
                         <h3>Patient Care</h3>
+
                         <p>
                             Personalized care plans and
                             patient support services.
                         </p>
+
                     </div>
 
+
                     <div className="service-card">
+
                         <h3>Emergency Response</h3>
+
                         <p>
                             Rapid emergency medical response
                             available 24/7.
                         </p>
+
                     </div>
 
                 </div>
@@ -133,6 +220,7 @@ function Home() {
 
 
             {/* Footer */}
+
             <footer id="contact" className="footer">
 
                 <h3>CURO Healthcare</h3>

@@ -5,6 +5,8 @@ import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
 import Login from './Login';
 import Register from './Register';
 import Home from './home';
+import DoctorDashboard from "./DoctorDashboard";
+import HospitalDashboard from "./HospitalDashboard";
 
 
 function App() {
@@ -12,13 +14,16 @@ function App() {
     <BrowserRouter>
       <Routes>
 
-        <Route path="/" element={<Navigate to="/login" />} />
+        <Route path="/" element={<Home />} />
 
         <Route path="/login" element={<Login />} />
 
         <Route path="/register" element={<Register />} />
 
         <Route path="/home" element={<Home />} />
+        <Route path="/doctor-dashboard" element={<DoctorDashboard />}/>
+        <Route path="/hospital-dashboard" element={<HospitalDashboard />} 
+/>
         
 
       </Routes>
