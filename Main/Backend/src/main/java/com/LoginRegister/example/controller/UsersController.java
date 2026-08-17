@@ -20,13 +20,13 @@ public class UsersController {
 	UserService userService;
 	
 	@PostMapping("/addUser") 
-	@CrossOrigin(origins = "http://localhost:3000")
+	@CrossOrigin(origins = "http://localhost:5173")
 	public Users addUser(@RequestBody Users user) {
 		return userService.addUser(user);
 	}
 	
 	@PostMapping("/loginUser")
-	@CrossOrigin(origins = "http://localhost:3000")
+	@CrossOrigin(origins = "http://localhost:5173")
 	public Boolean loginUser(@RequestBody LoginRequest loginRequest) {
 		return userService.loginUser(loginRequest);
 		

@@ -1,0 +1,6 @@
+com\LoginRegister\example\LoginRegisterServerApplication.class
+com\LoginRegister\example\repository\UsersRepo.class
+com\LoginRegister\example\service\UserService.class
+com\LoginRegister\example\controller\UsersController.class
+com\LoginRegister\example\entity\Users.class
+com\LoginRegister\example\requests\LoginRequest.class

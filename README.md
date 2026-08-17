@@ -445,7 +445,7 @@ CURO/
 │
 ├── notification-service/
 │
-├── frontend/
+├── curo-frontend/
 │
 ├── docker/
 │
@@ -502,7 +502,7 @@ Repeat for the remaining services.
 ## 5️⃣ Start Frontend
 
 ```bash
-cd frontend
+cd curo-frontend
 npm install
 npm run dev
 ```

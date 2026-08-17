@@ -24,11 +24,10 @@ public class UserService {
 	public Boolean loginUser(LoginRequest loginRequest) {
 		
 		Optional<Users> user = usersRepo.findById(loginRequest.getUserId());
-		Users user1 = user.get();
-		
-		if(user1 == null) {
+		if (!user.isPresent()) {
 			return false;
 		}
+		Users user1 = user.get();
 		
 		
 		
