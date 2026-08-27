@@ -40,6 +40,43 @@ export async function getUserProfile(userId) {
   return response.data;
 }
 
+// PROVIDER AUTH
+export async function providerSignup(data) {
+  const response = await api.post("/providers/auth/signup", data);
+  return response.data;
+}
+
+export async function providerLogin({ email, password }) {
+  const response = await api.post("/providers/auth/login", { email, password });
+  return response.data;
+}
+
+// PROVIDER SELF-SERVICE (requires provider's own token)
+export async function getMyProviderProfile() {
+  const response = await api.get("/providers/me/profile");
+  return response.data;
+}
+
+export async function updateMyProviderProfile(data) {
+  const response = await api.put("/providers/me/profile", data);
+  return response.data;
+}
+
+export async function getMyProviderStats() {
+  const response = await api.get("/providers/me/stats");
+  return response.data;
+}
+
+export async function toggleMyProviderActive() {
+  const response = await api.post("/providers/me/toggle-active");
+  return response.data;
+}
+
+export async function addSlot(providerId, { startTime, endTime }) {
+  const response = await api.post(`/providers/${providerId}/slots`, { startTime, endTime });
+  return response.data;
+}
+
 // PROVIDER SERVICE
 export async function getProviders({ speciality, lat, lng } = {}) {
   const response = await api.get("/providers", {
@@ -77,8 +114,8 @@ export async function getBooking(bookingId) {
   return response.data;
 }
 
-export async function listBookings() {
-  const response = await api.get("/bookings");
+export async function listBookings(params = {}) {
+  const response = await api.get("/bookings", { params });
   return response.data;
 }
 

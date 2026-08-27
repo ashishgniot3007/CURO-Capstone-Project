@@ -14,11 +14,26 @@ public class Provider {
     @Column(nullable = false)
     private String name;
 
+    @Column(nullable = false, unique = true)
+    private String email;
+
+    @Column(nullable = false)
+    private String passwordHash;
+
+    @Column
+    private String phone;
+
     @Column(nullable = false)
     private String type; // DOCTOR or HOSPITAL
 
     @Column
     private String speciality;
+
+    @Column
+    private String licenseNumber; // Medical license
+
+    @Column(columnDefinition = "TEXT")
+    private String description; // Bio/About
 
     @Column
     private Float lat;
@@ -27,26 +42,38 @@ public class Provider {
     private Float lng;
 
     @Column
+    private String address;
+
+    @Column
     private Float rating;
 
     @Column
     private Integer reviewsCount;
 
+    @Column
+    private Boolean isVerified; // Email verification
+
+    @Column
+    private Boolean isActive; // Can accept bookings
+
     @CreationTimestamp
     @Column(nullable = false)
     private LocalDateTime createdAt;
 
+    @Column
+    private LocalDateTime updatedAt;
+
     // Constructors
     public Provider() {}
 
-    public Provider(String name, String type, String speciality, Float lat, Float lng) {
+    public Provider(String name, String email, String type) {
         this.name = name;
+        this.email = email;
         this.type = type;
-        this.speciality = speciality;
-        this.lat = lat;
-        this.lng = lng;
         this.rating = 0f;
         this.reviewsCount = 0;
+        this.isVerified = false;
+        this.isActive = true;
     }
 
     // Getters and Setters
@@ -66,6 +93,30 @@ public class Provider {
         this.name = name;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPasswordHash() {
+        return passwordHash;
+    }
+
+    public void setPasswordHash(String passwordHash) {
+        this.passwordHash = passwordHash;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
     public String getType() {
         return type;
     }
@@ -80,6 +131,22 @@ public class Provider {
 
     public void setSpeciality(String speciality) {
         this.speciality = speciality;
+    }
+
+    public String getLicenseNumber() {
+        return licenseNumber;
+    }
+
+    public void setLicenseNumber(String licenseNumber) {
+        this.licenseNumber = licenseNumber;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public Float getLat() {
@@ -98,6 +165,14 @@ public class Provider {
         this.lng = lng;
     }
 
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
     public Float getRating() {
         return rating;
     }
@@ -114,11 +189,35 @@ public class Provider {
         this.reviewsCount = reviewsCount;
     }
 
+    public Boolean getIsVerified() {
+        return isVerified;
+    }
+
+    public void setIsVerified(Boolean isVerified) {
+        this.isVerified = isVerified;
+    }
+
+    public Boolean getIsActive() {
+        return isActive;
+    }
+
+    public void setIsActive(Boolean isActive) {
+        this.isActive = isActive;
+    }
+
     public LocalDateTime getCreatedAt() {
         return createdAt;
     }
 
     public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
+    }
+
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(LocalDateTime updatedAt) {
+        this.updatedAt = updatedAt;
     }
 }

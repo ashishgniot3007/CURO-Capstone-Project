@@ -10,13 +10,14 @@ const LINKS = [
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
-  const { token, logout } = useAuth();
+  const { token, userType, logout } = useAuth();
+  const dashboardPath = userType === "provider" ? "/provider/dashboard" : "/dashboard";
 
   return (
     <header className="sticky top-0 z-40 border-b border-line bg-paper/90 backdrop-blur">
-      <div className="container-page flex h-16 items-center justify-between">
+      <div className="container-page flex h-20 items-center justify-between">
         <Link to="/" className="flex items-center gap-2">
-          <span className="font-display text-xl font-semibold tracking-tight text-teal-700">curo</span>
+          <span className="font-display text-3xl font-bold tracking-tighter text-teal-700">curo</span>
         </Link>
 
         <nav className="hidden items-center gap-8 md:flex">
@@ -36,7 +37,7 @@ export default function Navbar() {
         <div className="hidden items-center gap-3 md:flex">
           {token ? (
             <>
-              <Button to="/dashboard" variant="ghost" size="sm">Dashboard</Button>
+              <Button to={dashboardPath} variant="ghost" size="sm">Dashboard</Button>
               <Button as="button" onClick={logout} variant="secondary" size="sm">Log out</Button>
             </>
           ) : (
@@ -76,7 +77,7 @@ export default function Navbar() {
             <div className="mt-2 flex gap-2 px-2 pb-2">
               {token ? (
                 <>
-                  <Button to="/dashboard" onClick={() => setOpen(false)} variant="secondary" size="sm" className="flex-1">Dashboard</Button>
+                  <Button to={dashboardPath} onClick={() => setOpen(false)} variant="secondary" size="sm" className="flex-1">Dashboard</Button>
                   <Button as="button" onClick={() => { logout(); setOpen(false); }} variant="primary" size="sm" className="flex-1">Log out</Button>
                 </>
               ) : (

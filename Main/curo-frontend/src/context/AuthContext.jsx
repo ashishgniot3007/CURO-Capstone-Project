@@ -5,6 +5,7 @@ const AuthContext = createContext(null);
 
 export function AuthProvider({ children }) {
   const [token, setTokenState] = useState(() => localStorage.getItem("curo_auth_token") || null);
+  const [userType, setUserTypeState] = useState(() => localStorage.getItem("curo_user_type") || null);
   const [user, setUserState] = useState(() => {
     const u = localStorage.getItem("curo_auth_user");
     if (u) {
@@ -17,9 +18,9 @@ export function AuthProvider({ children }) {
     return null;
   });
 
-  const login = (userData) => {
+  const login = (userData, type = "patient") => {
     const resolvedUser = {
-      userId: userData.userId,
+      userId: userData.userId || userData.id || userData.providerId,
       email: userData.email,
       name: userData.name || "",
       phone: userData.phone || "",
@@ -27,21 +28,25 @@ export function AuthProvider({ children }) {
 
     localStorage.setItem("curo_auth_token", userData.token);
     localStorage.setItem("curo_auth_user", JSON.stringify(resolvedUser));
+    localStorage.setItem("curo_user_type", type);
 
     setTokenState(userData.token);
     setUserState(resolvedUser);
+    setUserTypeState(type);
   };
 
   const logout = () => {
     localStorage.removeItem("curo_auth_token");
     localStorage.removeItem("curo_auth_user");
+    localStorage.removeItem("curo_user_type");
 
     setTokenState(null);
     setUserState(null);
+    setUserTypeState(null);
   };
 
   return (
-    <AuthContext.Provider value={{ token, user, login, logout }}>
+    <AuthContext.Provider value={{ token, user, userType, login, logout }}>
       {children}
     </AuthContext.Provider>
   );
@@ -54,3 +59,4 @@ export function useAuth() {
   }
   return context;
 }
+

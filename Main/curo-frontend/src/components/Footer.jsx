@@ -7,7 +7,7 @@ export default function Footer() {
         <div className="grid gap-10 md:grid-cols-[1.4fr_1fr_1fr]">
           <div>
             <div className="flex items-center gap-2">
-              <span className="font-display text-lg font-semibold text-teal-700">curo</span>
+              <span className="font-display text-xl font-bold tracking-tighter text-teal-700">curo</span>
             </div>
             <p className="mt-3 max-w-xs text-sm text-ink-soft">
               One place to find a provider, book appointments online or in person, and manage your health visits.

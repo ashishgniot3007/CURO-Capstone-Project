@@ -1,39 +1,70 @@
--- Users table
+
+-- ============================================================
+-- CURO DATABASE SCHEMA
+-- PostgreSQL
+-- IDs use BIGINT/BIGSERIAL to match Java Long fields
+-- ============================================================
+
+
+-- ============================================================
+-- USERS TABLE
+-- ============================================================
+
 CREATE TABLE IF NOT EXISTS users (
     id BIGSERIAL PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
     email VARCHAR(255) UNIQUE NOT NULL,
-    phone VARCHAR(20),
     password_hash VARCHAR(255) NOT NULL,
+    phone VARCHAR(20),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
--- Providers (doctors/hospitals)
+
+-- ============================================================
+-- PROVIDERS TABLE
+-- ============================================================
+
 CREATE TABLE IF NOT EXISTS providers (
     id BIGSERIAL PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
+    email VARCHAR(255) UNIQUE NOT NULL,
+    password_hash VARCHAR(255) NOT NULL,
+    phone VARCHAR(20),
     type VARCHAR(50) NOT NULL,
     speciality VARCHAR(255),
-    lat FLOAT,
-    lng FLOAT,
-    rating FLOAT DEFAULT 0,
-    reviews_count INT DEFAULT 0,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    license_number VARCHAR(255),
+    description TEXT,
+    address TEXT,
+    lat DOUBLE PRECISION,
+    lng DOUBLE PRECISION,
+    rating DOUBLE PRECISION DEFAULT 0,
+    reviews_count INTEGER DEFAULT 0,
+    is_verified BOOLEAN DEFAULT FALSE,
+    is_active BOOLEAN DEFAULT TRUE,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
--- Slots (availability)
+
+-- ============================================================
+-- SLOTS TABLE
+-- ============================================================
+
 CREATE TABLE IF NOT EXISTS slots (
     id BIGSERIAL PRIMARY KEY,
     provider_id BIGINT NOT NULL REFERENCES providers(id),
     start_time TIMESTAMP NOT NULL,
     end_time TIMESTAMP NOT NULL,
     status VARCHAR(50) DEFAULT 'AVAILABLE',
-    version INT DEFAULT 0,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    CONSTRAINT no_slot_overlap UNIQUE (provider_id, start_time)
+    version INTEGER DEFAULT 0,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
--- Bookings
+
+-- ============================================================
+-- BOOKINGS TABLE
+-- ============================================================
+
 CREATE TABLE IF NOT EXISTS bookings (
     id BIGSERIAL PRIMARY KEY,
     user_id BIGINT NOT NULL REFERENCES users(id),
@@ -44,18 +75,26 @@ CREATE TABLE IF NOT EXISTS bookings (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
--- Payments
+
+-- ============================================================
+-- PAYMENTS TABLE
+-- ============================================================
+
 CREATE TABLE IF NOT EXISTS payments (
     id BIGSERIAL PRIMARY KEY,
     booking_id BIGINT NOT NULL REFERENCES bookings(id),
-    amount DECIMAL(10,2),
+    amount DECIMAL(10, 2),
     status VARCHAR(50) DEFAULT 'INITIATED',
     gateway_txn_id VARCHAR(255),
     idempotency_key VARCHAR(255) UNIQUE,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
--- Appointments (after booking is confirmed)
+
+-- ============================================================
+-- APPOINTMENTS TABLE
+-- ============================================================
+
 CREATE TABLE IF NOT EXISTS appointments (
     id BIGSERIAL PRIMARY KEY,
     booking_id BIGINT NOT NULL REFERENCES bookings(id),
@@ -64,7 +103,11 @@ CREATE TABLE IF NOT EXISTS appointments (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
--- Follow-ups
+
+-- ============================================================
+-- FOLLOWUPS TABLE
+-- ============================================================
+
 CREATE TABLE IF NOT EXISTS followups (
     id BIGSERIAL PRIMARY KEY,
     appointment_id BIGINT NOT NULL REFERENCES appointments(id),
@@ -73,24 +116,74 @@ CREATE TABLE IF NOT EXISTS followups (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
--- Reviews
+
+-- ============================================================
+-- REVIEWS TABLE
+-- ============================================================
+
 CREATE TABLE IF NOT EXISTS reviews (
     id BIGSERIAL PRIMARY KEY,
     user_id BIGINT NOT NULL REFERENCES users(id),
     provider_id BIGINT NOT NULL REFERENCES providers(id),
-    rating INT CHECK (rating >= 1 AND rating <= 5),
+    rating INTEGER CHECK (rating >= 1 AND rating <= 5),
     comment TEXT,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
--- Indexes for performance
-CREATE INDEX IF NOT EXISTS idx_slots_provider_status ON slots(provider_id, status);
-CREATE INDEX IF NOT EXISTS idx_slots_start_time ON slots(start_time);
-CREATE INDEX IF NOT EXISTS idx_bookings_user ON bookings(user_id);
-CREATE INDEX IF NOT EXISTS idx_bookings_provider ON bookings(provider_id);
-CREATE INDEX IF NOT EXISTS idx_bookings_status ON bookings(status);
-CREATE INDEX IF NOT EXISTS idx_providers_speciality ON providers(speciality);
-CREATE INDEX IF NOT EXISTS idx_payments_booking ON payments(booking_id);
-CREATE INDEX IF NOT EXISTS idx_appointments_booking ON appointments(booking_id);
-CREATE INDEX IF NOT EXISTS idx_reviews_provider ON reviews(provider_id);
-CREATE INDEX IF NOT EXISTS idx_reviews_user ON reviews(user_id);
+
+-- ============================================================
+-- INDEXES
+-- ============================================================
+
+CREATE INDEX IF NOT EXISTS idx_provider_email
+    ON providers(email);
+
+CREATE INDEX IF NOT EXISTS idx_provider_type
+    ON providers(type);
+
+CREATE INDEX IF NOT EXISTS idx_provider_speciality
+    ON providers(speciality);
+
+CREATE INDEX IF NOT EXISTS idx_provider_is_active
+    ON providers(is_active);
+
+CREATE INDEX IF NOT EXISTS idx_user_email
+    ON users(email);
+
+CREATE INDEX IF NOT EXISTS idx_slot_provider
+    ON slots(provider_id);
+
+CREATE INDEX IF NOT EXISTS idx_slot_status
+    ON slots(status);
+
+CREATE INDEX IF NOT EXISTS idx_booking_user
+    ON bookings(user_id);
+
+CREATE INDEX IF NOT EXISTS idx_booking_provider
+    ON bookings(provider_id);
+
+CREATE INDEX IF NOT EXISTS idx_booking_status
+    ON bookings(status);
+
+CREATE INDEX IF NOT EXISTS idx_payment_booking
+    ON payments(booking_id);
+
+CREATE INDEX IF NOT EXISTS idx_review_provider
+    ON reviews(provider_id);
+
+
+-- ============================================================
+-- SAMPLE PROVIDER DATA
+-- ============================================================
+
+
+
+-- ============================================================
+-- NOTE
+-- ============================================================
+-- Update password_hash values with actual BCrypt hashes
+-- before using this in production.
+--
+-- Example:
+-- new BCryptPasswordEncoder().encode("password")
+-- ============================================================
