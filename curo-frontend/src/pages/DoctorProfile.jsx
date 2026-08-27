@@ -1,6 +1,7 @@
 import { useParams, Link, Navigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import Button from "../components/Button";
+import SkeletonCard, { SkeletonSlot } from "../components/SkeletonCard";
 import { getProvider, getSlots } from "../lib/api";
 
 function formatSlotTime(startTime) {
@@ -63,7 +64,16 @@ export default function DoctorProfile() {
   }, [id]);
 
   if (loading) {
-    return <div className="container-page py-14 text-center text-ink-soft">Loading provider profile...</div>;
+    return (
+      <div className="container-page py-10 sm:py-14">
+        <SkeletonCard lines={2} className="max-w-xl mb-8" />
+        <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 max-w-xl">
+          {Array.from({ length: 6 }).map((_, i) => (
+            <SkeletonSlot key={i} />
+          ))}
+        </div>
+      </div>
+    );
   }
 
   if (error || !doctor) {

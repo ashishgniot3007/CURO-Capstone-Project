@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
 import Button from "../components/Button";
+import SkeletonCard from "../components/SkeletonCard";
 import { useAuth } from "../context/AuthContext";
 import { listBookings, getProvider, getSlot, cancelBooking, getUserProfile } from "../lib/api";
 
@@ -140,7 +141,10 @@ function PatientDashboard({ patient }) {
       {tab === "Appointments" && (
         <div className="mt-6 grid gap-4 lg:grid-cols-2">
           {loading ? (
-            <div className="col-span-full py-8 text-center text-ink-soft text-sm">Loading appointments...</div>
+            <>
+              <SkeletonCard lines={2} />
+              <SkeletonCard lines={2} />
+            </>
           ) : error ? (
             <div className="col-span-full py-8 text-center text-pulse text-sm font-medium">{error}</div>
           ) : appointments.length > 0 ? (
@@ -201,7 +205,7 @@ function PatientDashboard({ patient }) {
       {tab === "Profile" && (
         <div className="mt-6 max-w-lg rounded-xl2 border border-line bg-white p-6">
           {loading && !profileData ? (
-            <div className="text-ink-soft text-sm">Loading profile details...</div>
+            <SkeletonCard lines={3} hasAvatar={false} />
           ) : (
             <>
               <div className="grid gap-4 sm:grid-cols-2">

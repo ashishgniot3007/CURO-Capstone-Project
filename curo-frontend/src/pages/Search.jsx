@@ -1,6 +1,7 @@
 import { useMemo, useState, useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
 import DoctorCard from "../components/DoctorCard";
+import SkeletonCard from "../components/SkeletonCard";
 import { specialities } from "../data/mock";
 import { getProviders } from "../lib/api";
 
@@ -122,7 +123,11 @@ export default function Search() {
       </div>
 
       {loading ? (
-        <div className="mt-16 text-center text-ink-soft">Loading providers...</div>
+        <div className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          {Array.from({ length: 3 }).map((_, i) => (
+            <SkeletonCard key={i} lines={2} />
+          ))}
+        </div>
       ) : error ? (
         <div className="mt-16 text-center text-pulse font-medium">{error}</div>
       ) : filtered.length > 0 ? (

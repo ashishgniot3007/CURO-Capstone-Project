@@ -211,6 +211,12 @@ export default function Auth({ mode = "login" }) {
             {isLogin ? "Create one" : "Log in"}
           </Link>
         </p>
+        <p className="mt-2 text-center text-xs text-ink-soft">
+          Are you a provider?{" "}
+          <Link to="/provider/login" className="font-medium text-teal-600 hover:underline">
+            Sign in here
+          </Link>
+        </p>
       </div>
     </div>
   );

@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import Button from "../components/Button";
 import DoctorCard from "../components/DoctorCard";
+import SkeletonCard from "../components/SkeletonCard";
 import { specialities } from "../data/mock";
 import { getProviders } from "../lib/api";
 
@@ -90,9 +91,7 @@ export default function Home() {
           {/* Dynamic showcase card */}
           <div className="relative flex items-center justify-center">
             {loading ? (
-              <div className="w-full max-w-sm rounded-xl2 border border-line bg-white p-6 shadow-lift text-center text-ink-soft text-sm">
-                Loading featured provider...
-              </div>
+              <SkeletonCard lines={2} className="w-full max-w-sm shadow-lift" />
             ) : topProvider ? (
               <div className="w-full max-w-sm rounded-xl2 border border-line bg-white p-6 shadow-lift">
                 <div className="flex items-center justify-between">
@@ -181,9 +180,21 @@ export default function Home() {
       )}
 
       {loading && (
-        <div className="container-page py-16 text-center text-ink-soft text-sm">
-          Loading providers...
-        </div>
+        <section className="container-page py-16 sm:py-20">
+          <div className="flex items-end justify-between">
+            <div>
+              <span className="eyebrow">Available near you</span>
+              <h2 className="mt-3 font-display text-3xl font-semibold tracking-tight text-ink">
+                Featured Doctors.
+              </h2>
+            </div>
+          </div>
+          <div className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+            {Array.from({ length: 3 }).map((_, i) => (
+              <SkeletonCard key={i} lines={2} />
+            ))}
+          </div>
+        </section>
       )}
 
       {/* TRUST STRIP */}

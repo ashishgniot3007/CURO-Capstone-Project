@@ -1,14 +1,8 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate, Navigate } from "react-router-dom";
 import Button from "../components/Button";
-import {
-  getProvider,
-  getSlots,
-  createBooking,
-  getBooking,
-  mockPaymentSuccess,
-  mockPaymentFail,
-} from "../lib/api";
+import SkeletonCard, { SkeletonSlot } from "../components/SkeletonCard";
+import { getProvider, getSlots, createBooking, getBooking, mockPaymentSuccess, mockPaymentFail } from "../lib/api";
 
 const STEPS = ["Slot", "Review", "Payment", "Confirmed"];
 
@@ -68,7 +62,16 @@ export default function Booking() {
   }, [id]);
 
   if (loading) {
-    return <div className="container-page py-14 text-center text-ink-soft">Loading booking flow...</div>;
+    return (
+      <div className="container-page max-w-2xl py-10 sm:py-14">
+        <SkeletonCard lines={1} className="mb-6" />
+        <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
+          {Array.from({ length: 6 }).map((_, i) => (
+            <SkeletonSlot key={i} />
+          ))}
+        </div>
+      </div>
+    );
   }
 
   if (!doctor) {
@@ -101,12 +104,8 @@ export default function Booking() {
         setBookingError(err.message || "This slot is already booked or taken. Please select another slot.");
         setStep(0);
         setSelectedSlot(null);
-        // Refresh slot list
         try {
-          const freshSlots = await getSlots(id, {
-            from: new Date().toISOString(),
-            to: new Date(Date.now() + 5 * 24 * 60 * 60 * 1000).toISOString(),
-          });
+          const freshSlots = await getSlots(id, { from: new Date().toISOString(), to: new Date(Date.now() + 5 * 24 * 60 * 60 * 1000).toISOString() });
           setSlots(freshSlots);
         } catch (e) {
           console.error("Failed to refresh slots:", e);
@@ -124,11 +123,8 @@ export default function Booking() {
     try {
       await mockPaymentSuccess(bookingId);
       const verifiedBooking = await getBooking(bookingId);
-      if (verifiedBooking.status === "CONFIRMED") {
-        setStep(3);
-      } else {
-        throw new Error(`Booking status is ${verifiedBooking.status}, expected CONFIRMED.`);
-      }
+      if (verifiedBooking.status === "CONFIRMED") setStep(3);
+      else throw new Error(`Booking status is ${verifiedBooking.status}, expected CONFIRMED.`);
     } catch (err) {
       setBookingError(err.message || "Payment confirmation failed. Please try again.");
     } finally {
@@ -143,10 +139,7 @@ export default function Booking() {
     try {
       await mockPaymentFail(bookingId);
       setBookingError("Payment simulated failure. Booking cancelled and slot released.");
-      setTimeout(() => {
-        setStep(0);
-        setSelectedSlot(null);
-      }, 2000);
+      setTimeout(() => { setStep(0); setSelectedSlot(null); }, 2000);
     } catch (err) {
       setBookingError(err.message || "Failed to cancel booking");
       setApiLoading(false);
