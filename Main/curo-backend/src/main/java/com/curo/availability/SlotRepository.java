@@ -17,6 +17,10 @@ public interface SlotRepository extends JpaRepository<Slot, Long> {
     List<Slot> findByProviderIdAndStatusAndStartTimeGreaterThanAndEndTimeLessThanOrderByStartTime(
             Long providerId, String status, LocalDateTime startTime, LocalDateTime endTime);
 
+    @Query("SELECT s FROM Slot s WHERE s.providerId = :providerId AND s.status != 'CANCELLED' " +
+           "AND s.startTime < :endTime AND s.endTime > :startTime")
+    List<Slot> findOverlappingSlots(@Param("providerId") Long providerId, @Param("startTime") LocalDateTime startTime, @Param("endTime") LocalDateTime endTime);
+
     @Modifying
     @Query("UPDATE Slot s SET s.status = 'LOCKED', s.version = s.version + 1 " +
            "WHERE s.id = :slotId AND s.status = 'AVAILABLE' AND s.version = :version")

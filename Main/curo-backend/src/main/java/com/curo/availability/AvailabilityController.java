@@ -1,8 +1,10 @@
 package com.curo.availability;
 
 import com.curo.availability.dto.SlotRequest;
+import com.curo.util.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.time.LocalDateTime;
@@ -13,6 +15,7 @@ import java.util.List;
 @CrossOrigin(origins = "*")
 public class AvailabilityController {
     @Autowired private AvailabilityService availabilityService;
+    @Autowired private JwtUtil jwtUtil;
 
     @GetMapping
     public ResponseEntity<List<Slot>> getSlots(
@@ -31,9 +34,17 @@ public class AvailabilityController {
     @PostMapping
     public ResponseEntity<Slot> createSlot(
             @PathVariable Long providerId,
-            @RequestBody SlotRequest req
+            @RequestBody SlotRequest req,
+            @RequestHeader(HttpHeaders.AUTHORIZATION) String authHeader
     ) {
         try {
+            if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+                return ResponseEntity.status(401).build();
+            }
+            Long tokenProviderId = jwtUtil.extractProviderId(authHeader.substring(7));
+            if (!providerId.equals(tokenProviderId)) {
+                return ResponseEntity.status(403).build();
+            }
             Slot slot = availabilityService.createSlot(providerId, req);
             return ResponseEntity.ok(slot);
         } catch (Exception e) {

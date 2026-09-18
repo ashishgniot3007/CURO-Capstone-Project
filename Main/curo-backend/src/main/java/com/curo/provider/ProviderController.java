@@ -63,7 +63,7 @@ public class ProviderController {
             List<Provider> providers;
 
             if (lat != null && lng != null) {
-                providers = providerService.findNearby(lat, lng);
+                providers = providerService.findNearby(lat, lng, speciality, type);
             } else if (speciality != null || type != null) {
                 providers = providerService.searchProviders(speciality, type);
             } else {
