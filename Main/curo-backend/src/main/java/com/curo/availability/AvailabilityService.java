@@ -51,12 +51,20 @@ public class AvailabilityService {
 
     @Transactional
     public Slot createSlot(Long providerId, SlotRequest req) {
+        List<Slot> overlapping = slotRepository.findOverlappingSlots(providerId, req.getStartTime(), req.getEndTime());
+        if (!overlapping.isEmpty()) {
+            throw new RuntimeException("Slot overlaps with an existing slot");
+        }
         Slot slot = new Slot(providerId, req.getStartTime(), req.getEndTime());
         return slotRepository.save(slot);
     }
 
     @Transactional
     public Slot createSlot(Long providerId, LocalDateTime startTime, LocalDateTime endTime) {
+        List<Slot> overlapping = slotRepository.findOverlappingSlots(providerId, startTime, endTime);
+        if (!overlapping.isEmpty()) {
+            throw new RuntimeException("Slot overlaps with an existing slot");
+        }
         Slot slot = new Slot(providerId, startTime, endTime);
         return slotRepository.save(slot);
     }

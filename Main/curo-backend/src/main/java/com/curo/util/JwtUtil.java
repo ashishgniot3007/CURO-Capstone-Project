@@ -66,6 +66,9 @@ public class JwtUtil {
     public Long extractUserId(String token) {
         try {
             Claims claims = getClaims(token);
+            if (!"USER".equals(claims.get("userType", String.class))) {
+                throw new RuntimeException("Invalid token type for user");
+            }
             return Long.parseLong(claims.getSubject());
         } catch (JwtException | IllegalArgumentException e) {
             throw new RuntimeException("Invalid token", e);
@@ -78,6 +81,9 @@ public class JwtUtil {
     public Long extractProviderId(String token) {
         try {
             Claims claims = getClaims(token);
+            if (!"PROVIDER".equals(claims.get("userType", String.class))) {
+                throw new RuntimeException("Invalid token type for provider");
+            }
             return Long.parseLong(claims.getSubject());
         } catch (JwtException | IllegalArgumentException e) {
             throw new RuntimeException("Invalid token", e);

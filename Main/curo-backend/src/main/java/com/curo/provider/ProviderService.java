@@ -60,7 +60,7 @@ public class ProviderService {
         Provider savedProvider = providerRepository.save(provider);
 
         // Generate JWT token
-        String token = jwtUtil.generateToken(savedProvider.getId(), savedProvider.getEmail());
+        String token = jwtUtil.generateProviderToken(savedProvider.getId(), savedProvider.getEmail());
 
         return new ProviderAuthResponse(
             savedProvider.getId(),
@@ -89,7 +89,7 @@ public class ProviderService {
         }
 
         // Generate JWT token
-        String token = jwtUtil.generateToken(provider.getId(), provider.getEmail());
+        String token = jwtUtil.generateProviderToken(provider.getId(), provider.getEmail());
 
         return new ProviderAuthResponse(
             provider.getId(),
@@ -182,8 +182,8 @@ public class ProviderService {
     /**
      * Search nearby providers
      */
-    public List<Provider> findNearby(Float lat, Float lng) {
-        return providerRepository.findNearby(lat, lng);
+    public List<Provider> findNearby(Float lat, Float lng, String speciality, String type) {
+        return providerRepository.findNearby(lat, lng, speciality, type);
     }
 
     /**

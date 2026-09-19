@@ -22,9 +22,11 @@ public interface ProviderRepository extends JpaRepository<Provider, Long> {
     @Query(value = "SELECT * FROM providers p WHERE " +
             "(6371 * acos(cos(radians(:lat)) * cos(radians(p.lat)) * cos(radians(p.lng) - radians(:lng)) + sin(radians(:lat)) * sin(radians(p.lat)))) < 50 " +
             "AND p.is_active = true " +
+            "AND (:speciality IS NULL OR p.speciality = :speciality) " +
+            "AND (:type IS NULL OR p.type = :type) " +
             "ORDER BY rating DESC",
             nativeQuery = true)
-    List<Provider> findNearby(@Param("lat") Float lat, @Param("lng") Float lng);
+    List<Provider> findNearby(@Param("lat") Float lat, @Param("lng") Float lng, @Param("speciality") String speciality, @Param("type") String type);
     
     @Query("SELECT p FROM Provider p WHERE " +
             "p.isActive = true AND " +

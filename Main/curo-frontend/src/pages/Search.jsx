@@ -68,7 +68,8 @@ export default function Search() {
         !query ||
         d.name.toLowerCase().includes(query.toLowerCase()) ||
         d.speciality.toLowerCase().includes(query.toLowerCase());
-      return matchesQuery;
+      const matchesSpec = spec === "All" || d.speciality === spec;
+      return matchesQuery && matchesSpec;
     });
 
     if (sort === "rating") {
@@ -76,7 +77,7 @@ export default function Search() {
     }
 
     return list;
-  }, [providers, query, sort]);
+  }, [providers, query, spec, sort]);
 
   return (
     <div className="container-page py-10 sm:py-14">
