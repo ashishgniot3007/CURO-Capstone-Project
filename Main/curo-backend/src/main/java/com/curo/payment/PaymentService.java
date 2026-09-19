@@ -24,7 +24,7 @@ public class PaymentService {
 
         // Mock: return a payment URL
         return new PaymentResponse(
-                "http://localhost:8080/api/payments/mock-success/" + bookingId,
+                "https://curo-capstone-project.onrender.com/api/payments/mock-success/" + bookingId,
                 saved.getId(),
                 "INITIATED"
         );
@@ -35,7 +35,7 @@ public class PaymentService {
                 .orElseThrow(() -> new RuntimeException("Payment not found"));
 
         return new PaymentResponse(
-                "http://localhost:8080/api/payments/mock-success/" + bookingId,
+                "https://curo-capstone-project.onrender.com/api/payments/mock-success/" + bookingId,
                 payment.getId(),
                 payment.getStatus()
         );
